@@ -1,0 +1,8 @@
+site_name: "csa-demo-container-deploy"
+site_description: "Deployment documentation for csa-demo-container"
+
+nav:
+  - Introduction: index.md
+
+plugins:
+  - techdocs-core
