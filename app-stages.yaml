@@ -1,0 +1,34 @@
+teamName: csa
+appName: demo-container
+appType: helm
+appNamespace:
+  create: true
+  annotations: {}
+  labels: {}
+stages:
+  - name: "dev"
+    targetClusterStage: "dev"
+    requestedFreight:
+    - origin:
+        kind: Warehouse
+        name: warehouse-{{ .Values.appName }}
+      sources:
+        direct: true
+  - name: "test"
+    targetClusterStage: "test"
+    requestedFreight:
+    - origin:
+        kind: Warehouse
+        name: warehouse-{{ .Values.appName }}
+      sources:
+        stages:
+        - dev
+  - name: "prod"
+    targetClusterStage: "prod"
+    requestedFreight:
+    - origin:
+        kind: Warehouse
+        name: warehouse-{{ .Values.appName }}
+      sources:
+        stages:
+        - test

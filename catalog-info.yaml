@@ -1,0 +1,169 @@
+# prod
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: "csa-demo-container-prod-deployment"
+  description: "deployment-csa-demo-container-prod"
+  tags:
+    - template
+    - deployment
+    - kargo
+    - demo
+    - csa
+  links:
+    - url: http://csa-demo-container.prod.tietoevry.platform-engineer.cloud
+      title: Prod Instance of csa-demo-container
+      icon: web
+  annotations:
+    github.com/project-slug: mjay-bs-test/csa-demo-container-deploy
+    backstage.io/kubernetes-label-selector: 'app.kubernetes.io/instance=demo-container-prod'
+    argocd/app-namespace: adn-csa
+    argocd/app-name: demo-container-prod
+    backstage.io/techdocs-ref: dir:.
+    kargo-project: "https://kargo.tietoevry.platform-engineer.cloud/project/csa-demo-container-kargo-project"
+    grafana/dashboard-selector: "(tags @> 'suXess')"
+    grafana/overview-dashboard: "https://grafana.tietoevry.platform-engineer.cloud/d/k8s_views_ns/kubernetes-views-namespaces?orgId=1&refresh=30s&var-datasource=default&var-cluster=prod001&var-namespace=csa-demo-container-prod&var-resolution=30s&var-created_by=All"
+spec:
+  type: service
+  lifecycle: prod
+  owner: "csa"
+  system: demo-container
+  dependsOn:
+    - resource:argocd
+    - resource:kubecost
+    - resource:grafana
+    - resource:metalstack
+    - resource:loki
+    - resource:kyverno
+    - resource:tempo
+    - resource:backstage
+  subcomponentOf: csa-demo-container-deploy
+---
+#test
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: "csa-demo-container-test-deployment"
+  description: "deployment-csa-demo-container-test"
+  tags:
+    - template
+    - deployment
+    - kargo
+    - demo
+    - csa
+  links:
+    - url: http://csa-demo-container.test.tietoevry.platform-engineer.cloud
+      title: Test Instance of csa-demo-container
+      icon: web
+  annotations:
+    github.com/project-slug: mjay-bs-test/csa-demo-container-deploy
+    backstage.io/kubernetes-label-selector: 'app.kubernetes.io/instance=demo-container-test'
+    argocd/app-namespace: adn-csa
+    argocd/app-name: demo-container-test
+    backstage.io/techdocs-ref: dir:.
+    kargo-project: "https://kargo.tietoevry.platform-engineer.cloud/project/csa-demo-container-kargo-project"
+    grafana/dashboard-selector: "(tags @> 'suXess')"
+    grafana/overview-dashboard: "https://grafana.tietoevry.platform-engineer.cloud/d/k8s_views_ns/kubernetes-views-namespaces?orgId=1&refresh=30s&var-datasource=default&var-cluster=test001&var-namespace=csa-demo-container-test&var-resolution=30s&var-created_by=All"
+spec:
+  type: service
+  lifecycle: test
+  owner: "csa"
+  system: demo-container
+  dependsOn:
+    - resource:argocd
+    - resource:kubecost
+    - resource:grafana
+    - resource:metalstack
+    - resource:loki
+    - resource:kyverno
+    - resource:tempo
+    - resource:backstage
+  subcomponentOf: csa-demo-container-deploy
+---
+# dev
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: "csa-demo-container-dev-deployment"
+  description: "deployment-csa-demo-container-dev"
+  tags:
+    - template
+    - deployment
+    - kargo
+    - demo
+    - csa
+  links:
+    - url: http://csa-demo-container.dev.tietoevry.platform-engineer.cloud
+      title: Dev Instance of csa-demo-container
+      icon: web
+  annotations:
+    github.com/project-slug: mjay-bs-test/csa-demo-container-deploy
+    backstage.io/kubernetes-label-selector: 'app.kubernetes.io/instance=demo-container-dev'
+    argocd/app-namespace: adn-csa
+    argocd/app-name: demo-container-dev
+    backstage.io/techdocs-ref: dir:.
+    kargo-project: "https://kargo.tietoevry.platform-engineer.cloud/project/csa-demo-container-kargo-project"
+    grafana/dashboard-selector: "(tags @> 'suXess')"
+    grafana/overview-dashboard: "https://grafana.tietoevry.platform-engineer.cloud/d/k8s_views_ns/kubernetes-views-namespaces?orgId=1&refresh=30s&var-datasource=default&var-cluster=dev001&var-namespace=csa-demo-container-dev&var-resolution=30s&var-created_by=All"
+spec:
+  type: service
+  lifecycle: dev
+  owner: "csa"
+  system: demo-container
+  dependsOn:
+    - resource:argocd
+    - resource:kubecost
+    - resource:grafana
+    - resource:metalstack
+    - resource:loki
+    - resource:kyverno
+    - resource:tempo
+    - resource:backstage
+  subcomponentOf: csa-demo-container-deploy
+---
+# main, at the end of catalog-info.yaml so that register link is on main component
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: "csa-demo-container-deploy"
+  description: "deployment-csa-demo-container"
+  tags:
+    - template
+    - deployment
+    - kargo
+    - demo
+    - csa
+  links:
+    - url: https://github.com/mjay-bs-test/csa-demo-container
+      title: Application Source Code
+      icon: github
+    - url: https://github.com/mjay-bs-test/csa-demo-container-deploy
+      title: Deployment Repository
+      icon: github
+    - url: https://argocd.tietoevry.platform-engineer.cloud/applications/adn-csa/csa-demo-container?resource=
+      title: ArgoCD Application Information of csa-demo-container
+      icon: argocd
+  annotations:
+    github.com/project-slug: mjay-bs-test/csa-demo-container-deploy
+    argocd/app-namespace: adn-csa
+    argocd/app-name: csa-demo-container
+    backstage.io/techdocs-ref: dir:.
+    kargo-project: "https://kargo.tietoevry.platform-engineer.cloud/project/csa-demo-container-kargo-project"
+    grafana/dashboard-selector: "(tags @> 'suXess')"
+spec:
+  type: service
+  lifecycle: production
+  owner: "csa"
+  system: demo-container
+  dependsOn:
+    - resource:argocd
+    - resource:kubecost
+    - resource:grafana
+    - resource:metalstack
+    - resource:loki
+    - resource:kyverno
+    - resource:tempo
+    - resource:backstage
+  dependencyOf:
+    - component:default/csa-demo-container
+---

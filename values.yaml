@@ -1,0 +1,29 @@
+# Default values for csa-demo-container
+replicaCount: 1
+
+image:
+  repository: ghcr.io/mjay-bs-test/csa-demo-container
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 80
+
+ingress:
+  enabled: true
+  className: ""
+  annotations: {}
+  tls: []
+  
+resources:
+  requests:
+    memory: "32Mi"
+    cpu: "50m"
+  limits:
+    memory: "64Mi"
+    cpu: "100m"
+
+# Injected by kubriX ApplicationSet from spoke cluster annotation
+kubriXIngressDomain: ""
